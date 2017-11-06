@@ -1,3 +1,0 @@
-[submodule "base/blinkid-core"]
-	path = base/blinkid-core
-	url = git@github.com:BlinkID/blinkid-core.git
