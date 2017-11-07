@@ -11,8 +11,10 @@ docker push microblink/base:latest
 docker push microblink/base:<VERSION>
 ```
 
-# Run LicenceRequestTool
+# Build and Deploy
+
+This script will build and deploy image to Docker Hub
 
 ```bash
-docker run -it --rm  microblink/base LicenseRequestTool
+./docker-release.sh
 ```
