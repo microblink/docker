@@ -1,6 +1,6 @@
 # Microblink Builder
 
-Image with all needed tools for compiling C++ source files.
+Image with all needed tools for compiling C++ and Java source files.
 
 ## Usage
 

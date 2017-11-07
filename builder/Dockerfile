@@ -1,12 +1,10 @@
 FROM microblink/base:1.0
-LABEL maintainer="Matija Stepanic <matija.stepanic@microblink.com>"
+LABEL maintainer="Matija Stepanic <matija.stepanic@microblink.com>" version="1.0"
 
-RUN apt-get update
+RUN apt-get update && \
+	apt-get install -y ccache cmake ninja-build && \
+	rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/* /var/tmp/*	
 
-RUN apt-get install -y ninja-build
-RUN apt-get install -y cmake
-RUN apt-get install -y ccache
+WORKDIR /data/build
 
-VOLUME ["/data/source", "/data/build"]
-
-ENTRYPOINT ["sh", "-c", "cd /data/build && cmake -G Ninja /data/source && ninja"]
+CMD cmake -G Ninja /data/source && ninja
