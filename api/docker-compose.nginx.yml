@@ -1,0 +1,28 @@
+version: '2'
+services:
+  nginx:
+    image: jwilder/nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./srv/nginx/htpasswd:/etc/nginx/htpasswd
+      - ./srv/nginx/vhost.d:/etc/nginx/vhost.d
+      - ./srv/nginx/html:/usr/share/nginx/html
+      - ./srv/ssl_certs:/etc/nginx/certs:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+  nginx-lets-encrypt-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes_from:
+      - nginx
+    volumes:
+      - ./srv/ssl_certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+
+networks:
+  default:
+    external:
+      name: microblink
