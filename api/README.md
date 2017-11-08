@@ -8,7 +8,7 @@ Tutorial includes instance setup, Docker and Docker Compose installation, SWAP d
 
 <p align="center" >
   <a href="https://youtu.be/kIR4SVRSa9U" target="_blank">
-    <img src="https://raw.githubusercontent.com/" alt="Video tutorial" />
+    <img src="https://raw.githubusercontent.com/microblink/docker/83c07acda6f15765b47e8f90f8335cac52105713/api/tutorial_aws.gif" alt="Video tutorial" />
   </a>
   <a href="https://vimeo.com/241867174" target="_blank">Watch on Vimeo</a>
   <a href="https://youtu.be/kIR4SVRSa9U" target="_blank">Watch on YouTube</a>
@@ -54,15 +54,11 @@ It is recommended to run application with Nginx proxy and Basic authentication w
 `-it` is used for interactive mode.  
 `--rm` is used to be removed when container is stopped.  
 
-```bash
-docker run -it --rm -p 0.0.0.0:8080:8080 -e "LICENSEE=xxxx" -e "LICENCE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=5" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=3" microblink/api
-```
+`docker run -it --rm -p 0.0.0.0:8080:8080 -e "LICENSEE=xxxx" -e "LICENCE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=5" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=3" microblink/api`
 
 #### Production
 
 `-d` is used to be executed as background process.  
 `--restart unless-stopped` is used as protection to be automatically restarted if container is down.   
 
-```bash
-docker run -d --restart unless-stopped --name microblink-api -p 80:8080 -p 443:8080 -e "LICENSEE=xxxx" -e "LICENCE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=8" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=200" -e "MINUTES_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=120" microblink/api:1.0.0
-```
+`docker run -d --restart unless-stopped --name microblink-api -p 80:8080 -p 443:8080 -e "LICENSEE=xxxx" -e "LICENCE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=8" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=200" -e "MINUTES_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=120" microblink/api:1.0.0`
