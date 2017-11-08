@@ -16,11 +16,11 @@ Tutorial includes instance setup, Docker and Docker Compose installation, SWAP d
 
 # Docker Compose templates
 
-[Nginx proxy, Let's Encrypt certificate obtainer and Microblink API](./api/docker-compose.yml)  
+[Nginx proxy, Let's Encrypt certificate obtainer and Microblink API](./docker-compose.yml)  
 
-[Nginx proxy and Let's Encrypt certificate obtainer](./api/docker-compose.nginx.yml)  
+[Nginx proxy and Let's Encrypt certificate obtainer](./docker-compose.nginx.yml)  
 
-[Microblink API](./api/docker-compose.api.yml)  
+[Microblink API](./docker-compose.api.yml)  
  
 
 # Setup
