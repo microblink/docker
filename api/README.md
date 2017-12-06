@@ -10,8 +10,8 @@ Tutorial includes instance setup, Docker and Docker Compose installation, SWAP d
   <a href="https://youtu.be/kIR4SVRSa9U" target="_blank">
     <img src="https://raw.githubusercontent.com/microblink/docker/83c07acda6f15765b47e8f90f8335cac52105713/api/tutorial_aws.gif" alt="Video tutorial" />
   </a>
-  <a href="https://vimeo.com/241867174" target="_blank">Watch on Vimeo</a>
-  <a href="https://youtu.be/kIR4SVRSa9U" target="_blank">Watch on YouTube</a>
+  <a href="https://vimeo.com/242042478" target="_blank">Watch on Vimeo</a>
+  <a href="https://youtu.be/uSMc5ELC6f8" target="_blank">Watch on YouTube</a>
 </p>
 
 # Docker Compose templates
