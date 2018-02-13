@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    image: microblink/api:1.0.0
+    image: microblink/api:1.0.1
     environment:
       - LICENSEE=
       - LICENCE_KEY=
