@@ -7,4 +7,4 @@ RUN apt-get update && \
 
 WORKDIR /data/build
 
-CMD cmake -G Ninja /data/source && ninja
+CMD cmake -G Ninja /data/source && ninja && strip BlinkIDNativeWrapper
