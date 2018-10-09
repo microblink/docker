@@ -1,3 +1,13 @@
+# This is the Webproxy Docker Compose configuration
+
+# NGINX is web proxy and Let's Encrypt SSL certificate provider
+
+# This is just the recommendation how to serve Microblink API via webproxy
+# if you have more than one application which you want to expose to the host machine and make it available at the
+# standard HTTP and HTTPS ports
+
+# Communication between webproxy and Microblink API Docker Container is made from Docker Bridge network named `microblink`
+
 version: '2'
 services:
   nginx:
