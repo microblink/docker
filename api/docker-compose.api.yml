@@ -1,14 +1,19 @@
+# Values in <> should be changed with exact values
+
 version: '3'
 services:
   api:
-    image: microblink/api:1.0.2
+    image: microblink/api:1.2.0
     environment:
-      - LICENSEE=
-      - LICENCE_KEY=
-      - VIRTUAL_HOST=
+      - LICENSEE=<FROM_https://microblink.com/customer/licences>
+      - LICENSE_KEY=<FROM_https://microblink.com/customer/licences>
+      # This is Optional if you want to use Microblink API via NGINX proxy
+      # and to use Let's Encrypt as SSL certificate provider
+      - VIRTUAL_HOST=<api.microblink.YOUR_DOMAIN.com>
+      # It should be 8080 because Java SPring application inside of Docker image is hosted on port 8080 inside of container
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=
-      - LETSENCRYPT_EMAIL=
+      - LETSENCRYPT_HOST=<api.microblink.YOUR_DOMAIN.com>
+      - LETSENCRYPT_EMAIL=<EMAIL_ADDRESS where Let's Encrypt will send notifications>
     restart: always
 
 networks:
