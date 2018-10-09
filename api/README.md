@@ -1,6 +1,8 @@
-This is the `Dockerfile` and `docker-compose.yml` implementation but Microblink API Java and C++ is private and not available to the public. 
+This are only the `Dockerfile` and `docker-compose.yml` implementations.  
 
-# Tutorial 
+Application sources for Microblink API written in Java and OCR engine in C++ are private and not available as open-source.
+
+# Tutorial
 
 This is the step by step guide how to host application on EC2 instance on Amazon Web services.  
 
@@ -10,31 +12,28 @@ The tutorial includes instance setup, Docker and Docker Compose installation, SW
   <a href="https://youtu.be/kIR4SVRSa9U" target="_blank">
     <img src="https://raw.githubusercontent.com/microblink/docker/83c07acda6f15765b47e8f90f8335cac52105713/api/tutorial_aws.gif" alt="Video tutorial" />
   </a>
-  <a href="https://vimeo.com/242042478" target="_blank">Watch on Vimeo</a>
-  <a href="https://youtu.be/uSMc5ELC6f8" target="_blank">Watch on YouTube</a>
+  <a href="https://vimeo.com/242042478" target="_blank">Watch the full tutorial on Vimeo</a>
+  <a href="https://youtu.be/uSMc5ELC6f8" target="_blank">Watch the full tutorial on YouTube</a>
 </p>
 
 
 # Docker Compose templates
 
-[Nginx proxy, Let's Encrypt certificate obtainer and Microblink API](./docker-compose.yml)  
-
-[Nginx proxy and Let's Encrypt certificate obtainer](./docker-compose.nginx.yml)  
-
 [Microblink API](./docker-compose.api.yml)  
- 
+
+[Nginx proxy and Let's Encrypt certificate obtainer](./docker-compose.webproxy.yml)  
 
 # Setup
 
-It is recommended to run the application with Nginx proxy and Basic authentication with Docker Compose but it is possible to host application directly by exposing port 8080 from the container. 
+It is recommended to run the application with Nginx proxy and Basic authentication with Docker Compose but it is possible to host application directly by exposing port 8080 from the Microblink's API container. 
 
 ## ENV variables
 
 ### Required
 
-`LICENSEE` should be a String and it is required, a licensee should be explicitly set because licence key should have support for multiple apps because Docker image could be horizontally scaled across multiple servers with different licensees.  
+`LICENSEE` should be a String and it is required, a licensee should be explicitly set because license key should have support for multiple apps because Docker image could be horizontally scaled across multiple servers.  
 
-`LICENCE_KEY` should be a String and it is required, without set correct licence key application would not be started. Licence key should be generated for `platform=Linux`, `product=BlinkIDCore`, `version>=3.1` and `licensee=XXX`.  
+`LICENSE_KEY` should be a Base64 String and it is required, without set correct license key application would not be started. License key should be generated for `platform=Linux`, `product=MicroblinkCore`, `version>=1.0` and `licensee=XXX`.  
 
 #### Optional
 
