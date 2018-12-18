@@ -31,9 +31,9 @@ It is recommended to run the application with Nginx proxy and Basic authenticati
 
 ### Required
 
-`LICENSEE` should be a String and it is required, a licensee should be explicitly set because license key should have support for multiple apps because Docker image could be horizontally scaled across multiple servers.  
+`LICENSEE` should be a String and it is required, a licensee should be explicitly set because license key should have support for multiple apps because Docker image could be horizontally scaled across multiple servers with different licensees.  
 
-`LICENSE_KEY` should be a Base64 String and it is required, without set correct license key application would not be started. License key should be generated for `platform=Linux`, `product=MicroblinkCore`, `version>=1.0` and `licensee=XXX`.  
+`LICENSE_KEY` should be a Base64 String and it is required, without set correct license key application would not be started. License key should be generated for `platform=Linux`, `product=MicroblinkCore`, `version>=1.0` and `licensee=XXX`.   
 
 #### Optional
 
@@ -54,11 +54,40 @@ It is recommended to run the application with Nginx proxy and Basic authenticati
 `-it` is used for interactive mode.  
 `--rm` is used to be removed when the container is stopped.  
 
-`docker run -it --rm -p 0.0.0.0:8080:8080 -e "LICENSEE=xxxx" -e "LICENCE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=5" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=3" microblink/api`
+`docker run -it --rm -p 0.0.0.0:8080:8080 -e "LICENSEE=xxxx" -e "LICENSE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=5" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=3" microblink/api`
 
 #### Production
 
 `-d` is used to be executed as a background process.  
 `--restart unless-stopped` is used as protection to be automatically restarted if a container is down.   
 
-`docker run -d --restart unless-stopped --name microblink-api -p 80:8080 -p 443:8080 -e "LICENSEE=xxxx" -e "LICENCE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=8" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=200" -e "MINUTES_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=120" microblink/api:1.0.0`
+`docker run -d --restart unless-stopped --name microblink-api -p 80:8080 -p 443:8080 -e "LICENSEE=xxxx" -e "LICENSE_KEY=xxxx" -e "DEFAULT_NUMBER_OF_WORKERS=8" -e "TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=200" -e "MINUTES_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=120" microblink/api:1.5.0`
+
+## Docker Compose
+
+### Standalone run
+
+`docker-compose up` with `docker-compose.yml`
+
+### Behind Nginx webproxy and with Let's encrypt 
+
+Run web proxy with separate Docker Compose configuration with `docker-compose -f docker-compose.webproxy.yml` adn then run as standalone run.
+
+## Docker Swarm
+
+When application is run on the Swarm node it is possible to store credentials (`LICENSEE` and `LICENSE_KEY`) to the Docker secrets, and then use Docker Compose configuration `docker-compose.swarm.yml`.
+
+### Steps
+
+1. Initialize Swarm cluster:  
+  `docker swarm init`
+  
+2. Create secrets MICROBLINK_LICENSEE and MICROBLINK_LICENSE_KEY:  
+  `echo "myLicensee" | docker secret create MICROBLINK_LICENSEE -`   
+  `echo "myLicenseKey" | docker secret create MICROBLINK_LICENSE_KEY -`   
+  
+3. Run stack service:  
+  `docker stack deploy -c docker-compose.swarm.yml microblink-api-stack`
+  
+4. View logs on running container:  
+  `docker logs $(docker ps | grep microblink-api-stack | awk  '{print $1}')`
