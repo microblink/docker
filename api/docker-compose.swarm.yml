@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  api:
+    image: microblink/api:1.5.0
+    environment:
+      - LICENSEE=DOCKER-SECRET->MICROBLINK_LICENSEE
+      - LICENSE_KEY=DOCKER-SECRET->MICROBLINK_LICENSE_KEY
+      - PORT=${PORT-8080}
+    volumes:
+      - ./logs:/opt/microblink-api-ws/logs
+    ports:
+      - "80:${PORT-8080}"
+    secrets:
+      - MICROBLINK_LICENSEE
+      - MICROBLINK_LICENSE_KEY
+
+secrets:
+  MICROBLINK_LICENSEE:
+    external: true
+  MICROBLINK_LICENSE_KEY:
+    external: true
