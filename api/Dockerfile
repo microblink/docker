@@ -5,6 +5,8 @@ EXPOSE 8080
 
 VOLUME /tmp
 
+RUN mkdir -p /opt/microblink-api-ws/logs
+
 ENV DEFAULT_NUMBER_OF_WORKERS=2
 ENV TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=200
 ENV MINUTES_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED=120
@@ -29,9 +31,15 @@ ENV MAX_VISIBLE_MASKED_PERCENTAGE_OF_PROPERTY=0.4
 ENV LICENCE_KEY=""
 ENV LICENSE_KEY=""
 
+ENV PORT=8080
+
+# Script which will expand Docker secrets to the container's environment variables
+COPY docker/docker_secrets_to_env_var_expand.sh /docker_secrets_to_env_var_expand.sh
+
 ADD microblink-core-protobuf-wrapper/wrapper/binary/linux/x64/wrapper wrapper/wrapper
 ADD microblink-core-protobuf-wrapper/wrapper/resources wrapper/resources
 
 ADD target/api.jar app.jar
 
-CMD java $JAVA_OPTS -Dmicroblink.licensee="$LICENSEE" -Dmicroblink.licenseKey="$LICENSE_KEY$LICENCE_KEY" -Dmicroblink.ping.isEnabled=$PING_IS_ENABLED -Dmicroblink.ping.period.tasks=$PING_PERIOD_TASKS -Dmicroblink.isMlsUploadEnabled=$MLS_IS_ENABLED -Dmicroblink.id.enabled=$MICROBLINK_IDENTITY_IS_ENABLED -Dmicroblink.id.serverURL="$MICROBLINK_IDENTITY_SERVER_URL" -Dmicroblink.id.consumerAuthenticationHeader="$MICROBLINK_IDENTITY_CONSUMER_AUTHENTICATION_HEADER" -Dmicroblink.id.isEnabledAndAuthorizationIsMissing.isMaskingResultsEnabled=$MICROBLINK_IDENTITY_IS_ENABLED_AND_AUTHORIZATION_IS_MISSING_IS_MASKING_RESULTS_ENABLED -Dmicroblink.id.consumeBatch.whenAccumulatedExecutionsAreMoreThan=$MICROBLINK_IDENTITY_CONSUME_BATCH_WHEN_ACCUMULATED_EXECUTIONS_ARE_MORE_THAN -Dmicroblink.id.consumeBatch.afterHowManySecondsStartNewConsuming=$MICROBLINK_IDENTITY_CONSUME_BATCH_WHEN_HOW_MANY_SECONDS_SINCE_LAST_CONSUMING -Dmicroblink.maxVisibleMaskedCharactersPerProperty=$MAX_VISIBLE_MASKED_CHARACTERS_PER_PROPERTY -Dmicroblink.maxVisibleMaskedPercentageOfProperty=$MAX_VISIBLE_MASKED_PERCENTAGE_OF_PROPERTY -Dmicroblink.wrapperPath="/wrapper/wrapper" -Dmicroblink.resourcesPath="/wrapper/resources" -Dmicroblink.defaultNumberOfWorkers=$DEFAULT_NUMBER_OF_WORKERS -Dmicroblink.taskCounterLimitWhenWorkerShouldBeStopped=$TASK_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED -Dmicroblink.minutesCounterLimitWhenWorkerShouldBeStopped=$MINUTES_COUNTER_LIMIT_WHEN_WORKER_SHOULD_BE_STOPPED -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+COPY docker/entrypoint.sh /entrypoint.sh
+ENTRYPOINT "/entrypoint.sh"
