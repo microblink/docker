@@ -3,10 +3,12 @@
 version: '3'
 services:
   api:
-    image: microblink/api:1.3.2
+    image: microblink/api:1.5.0
     environment:
       - LICENSEE=<FROM_https://microblink.com/customer/licences>
       - LICENSE_KEY=<FROM_https://microblink.com/customer/licences>
+      - PORT=${PORT-8080}
+
       # This is Optional if you want to use Microblink API via NGINX proxy
       # and to use Let's Encrypt as SSL certificate provider
       - VIRTUAL_HOST=<api.microblink.YOUR_DOMAIN.com>
@@ -14,7 +16,12 @@ services:
       - VIRTUAL_PORT=8080
       - LETSENCRYPT_HOST=<api.microblink.YOUR_DOMAIN.com>
       - LETSENCRYPT_EMAIL=<EMAIL_ADDRESS where Let's Encrypt will send notifications>
-    restart: always
+      
+    restart: unless-stopped
+    volumes:
+      - ./logs:/opt/microblink-api-ws/logs
+    ports:
+      - "80:${PORT-8080}"
 
 networks:
   default:
