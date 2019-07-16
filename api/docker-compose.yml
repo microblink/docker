@@ -3,7 +3,7 @@
 version: '3'
 services:
   api:
-    image: microblink/api:1.5.0
+    image: microblink/api:1.17.1
     environment:
       - LICENSEE=<FROM_https://microblink.com/customer/licences>
       - LICENSE_KEY=<FROM_https://microblink.com/customer/licences>
@@ -16,6 +16,9 @@ services:
       - VIRTUAL_PORT=8080
       - LETSENCRYPT_HOST=<api.microblink.YOUR_DOMAIN.com>
       - LETSENCRYPT_EMAIL=<EMAIL_ADDRESS where Let's Encrypt will send notifications>
+
+      # Customize internal Java Spring application for specific use-case
+      # - JAVA_OPTS=-Xmx6g -Dserver.ssl.enabled=true
       
     restart: unless-stopped
     volumes:

@@ -1,11 +1,12 @@
 version: '3.3'
 services:
   api:
-    image: microblink/api:1.5.0
+    image: microblink/api:1.17.1
     environment:
       - LICENSEE=DOCKER-SECRET->MICROBLINK_LICENSEE
       - LICENSE_KEY=DOCKER-SECRET->MICROBLINK_LICENSE_KEY
       - PORT=${PORT-8080}
+      # - JAVA_OPTS=-Xmx3g
     volumes:
       - ./logs:/opt/microblink-api-ws/logs
     ports:
