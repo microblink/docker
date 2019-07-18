@@ -8,7 +8,7 @@ The whole documentation how to configure and run Docker Image `microblink/api` i
 
 # Docker Compose templates
 
-[Microblink API](./docker-compose.api.yml)  
+[Microblink API](./docker-compose.yml)  
 
 [Nginx proxy and Let's Encrypt certificate obtainer](./docker-compose.webproxy.yml)  
 
