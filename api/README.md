@@ -16,6 +16,16 @@ The whole documentation how to configure and run Docker Image `microblink/api` i
 
 It is recommended to run the application with Nginx proxy and Basic authentication with Docker Compose but it is possible to host application directly by exposing port 8080 from the Microblink's API container.  
 
+# Environment variables
+
+Well documented environment variables are available in the [`Dockerfile`](./Dockerfile)  
+
+Most of the environment variables are recommended to stay unchanged except for the required variables. They are documented in the `Dockerfile` separated by the categories
+
+- `REQUIRED` - without their setup application is not able to run
+- `OPTIONAL` - variables for specific application behaviour
+- `ADVANCED` - these are optional variables but it is not recommended to change them, only if you have some specific use-case, but for most scenarios default values are set to achieve application's best fit in general environment
+
 ## Run
 
 #### Development

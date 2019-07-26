@@ -3,11 +3,29 @@
 version: '3'
 services:
   api:
-    image: microblink/api:1.17.1
+    image: microblink/api:1.18.0
+    # To avoid security issues run application as non-root user `microblink`
+    # before application run create user on the host machine and enable write permissions for
+    # all mounted volumes
+    # user: microblink
+
+    # All available environment variables are documented in Dockerfile
+    # https://github.com/microblink/docker/blob/master/api/Dockerfile
     environment:
       - LICENSEE=<FROM_https://microblink.com/customer/licences>
       - LICENSE_KEY=<FROM_https://microblink.com/customer/licences>
       - PORT=${PORT-8080}
+
+      # Basic authentication is enabled when username and password are defined
+      - BASIC_AUTH_USERNAME=microblink
+      # Password should be an BCrypt hash
+      # characters '$' should be escaped as '$$'
+      # Example: plain password 'microblink123' as BCrypt hash
+      - BASIC_AUTH_PASSWORD=$$2y$$12$$i4/BHvnVt.RemfBDF2GCqed.bN3LKN9.zkODvvmlA8h1Xg5vyhBdC
+
+      # Limit image upload size to {x}MB, by default limiting is disabled (unlimited file size is allowed)
+      # Example: limit to 10.25MB
+      - MICROBLINK_IMAGE_SIZE_LIMIT_IN_MB=10.25
 
       # This is Optional if you want to use Microblink API via NGINX proxy
       # and to use Let's Encrypt as SSL certificate provider
@@ -17,8 +35,14 @@ services:
       - LETSENCRYPT_HOST=<api.microblink.YOUR_DOMAIN.com>
       - LETSENCRYPT_EMAIL=<EMAIL_ADDRESS where Let's Encrypt will send notifications>
 
-      # Customize internal Java Spring application for specific use-case
-      # - JAVA_OPTS=-Xmx6g -Dserver.ssl.enabled=true
+      # NOTE: only the last one Docker env variable with the same name will be used.
+      # Do not set JAVA_OPTS more than once, the last one will override previous defined.
+      # Multiple options define in the one JAVA_OPTS value.
+
+      # Customize internal Java Spring application for specific use-case.
+      # EXAMPLES
+      - JAVA_OPTS=-Xmx6g -Dserver.ssl.enabled=true
+      # - JAVA_OPTS=-Dserver.ssl.enabled=true -Dserver.ssl.key-store-type=PKCS12 -Dserver.ssl.key-store=/custom/mounted/path/my-custom-keystore.p12 -Dserver.ssl.key-store-password=my-custom-keytore-password -Dserver.ssl.key-alias=custom-key-alias
       
     restart: unless-stopped
     volumes:
