@@ -3,7 +3,7 @@
 version: '3'
 services:
   api:
-    image: microblink/api:1.18.0
+    image: microblink/api:1.22.0
     # To avoid security issues run application as non-root user `microblink`
     # before application run create user on the host machine and enable write permissions for
     # all mounted volumes
