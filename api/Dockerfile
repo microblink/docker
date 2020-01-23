@@ -47,7 +47,7 @@ ENV JAVA_OPTS=""
 # ------------------------------------------------------
 ## ADVANCED
 # ---------
-### Not allowed to change! Changing these values without written approval from Microblink can cause insufficient support! 
+### Not allowed to change! Changing these values without written approval from Microblink can cause insufficient support!
 
 ## WORKERS - OCR engine
 # 2 workers are ideal combination, because 1 worker with multiple requests uses about 50% of available CPUs
@@ -61,6 +61,12 @@ ENV PING_IS_ENABLED=true
 ENV PING_PERIOD_TASKS=100
 ## MLS - OCR example collector
 ENV MLS_IS_ENABLED=false
+## Whitelists for image URLs
+ENV IMAGE_URL_HOSTS_ALLOWED=""
+ENV IMAGE_URL_PORTS_ALLOWED=80,443
+ENV IMAGE_URL_PROTOCOLS_ALLOWED=http,https
+## Detail level of Http responses
+ENV VERBOSE_HTTP_RESPONSE=true
 ## SaaS custom authentication with apiKey/apiSecret
 ENV MICROBLINK_IDENTITY_IS_ENABLED=false
 ENV MICROBLINK_IDENTITY_SERVER_URL=https://api.microblink.com/id
