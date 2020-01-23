@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   api:
-    image: microblink/api:1.18.0
+    image: microblink/api:1.22.0
     environment:
       - LICENSEE=DOCKER-SECRET->MICROBLINK_LICENSEE
       - LICENSE_KEY=DOCKER-SECRET->MICROBLINK_LICENSE_KEY
