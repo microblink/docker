@@ -1,12 +1,31 @@
 version: '3.3'
 services:
   api:
-    image: microblink/api:1.22.0
+    image: microblink/api:1.23.0
     environment:
+#      REQUIRED variables:
       - LICENSEE=DOCKER-SECRET->MICROBLINK_LICENSEE
       - LICENSE_KEY=DOCKER-SECRET->MICROBLINK_LICENSE_KEY
+
       - PORT=${PORT-8080}
-      # - JAVA_OPTS=-Xmx3g
+
+#      OPTIONAL variables:
+#      - MLS_IS_ENABLED=true
+#      - MICROBLINK_IDENTITY_IS_ENABLED=true
+#      - MICROBLINK_IDENTITY_SERVER_URL=https://apiprod.microblink.com/id
+#      - MICROBLINK_IDENTITY_CONSUMER_AUTHENTICATION_HEADER=<YOUR_CONSUMER_AUTHORIZATION>
+#      - MICROBLINK_IDENTITY_CONSUME_BATCH_WHEN_ACCUMULATED_EXECUTIONS_ARE_MORE_THAN=10
+#      - MICROBLINK_IDENTITY_CONSUME_BATCH_WHEN_HOW_MANY_SECONDS_SINCE_LAST_CONSUMING=30
+#      - MICROBLINK_IDENTITY_IS_ENABLED_AND_AUTHORIZATION_IS_MISSING_IS_MASKING_RESULTS_ENABLED=true
+
+#      OPTIONAL but ONLY IF: nginx is used as web proxy and Let's Encrypt as SSL certificate provider
+#      docker-compose.webproxy.yml should be run before this docker-compose.yml
+
+#      - VIRTUAL_HOST=microblink-docker-test.example.com
+#      - VIRTUAL_PORT=8080
+#      - LETSENCRYPT_HOST=microblink-docker-test.example.com
+#      - LETSENCRYPT_EMAIL=microblink-docker-test@example.com
+
     volumes:
       - ./logs:/opt/microblink-api-ws/logs
     ports:
