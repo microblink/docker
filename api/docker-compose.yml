@@ -3,7 +3,7 @@
 version: '3'
 services:
   api:
-    image: microblink/api:1.22.0
+    image: microblink/api:1.23.0
     # To avoid security issues run application as non-root user `microblink`
     # before application run create user on the host machine and enable write permissions for
     # all mounted volumes
@@ -43,7 +43,22 @@ services:
       # EXAMPLES
       - JAVA_OPTS=-Xmx6g -Dserver.ssl.enabled=true
       # - JAVA_OPTS=-Dserver.ssl.enabled=true -Dserver.ssl.key-store-type=PKCS12 -Dserver.ssl.key-store=/custom/mounted/path/my-custom-keystore.p12 -Dserver.ssl.key-store-password=my-custom-keytore-password -Dserver.ssl.key-alias=custom-key-alias
-      
+
+      # Set maximum size for JVM memory allocation pool.
+      # Recommended to set 1GB less than available RAM memory on the machine,
+      # if container has not defined any memory limit.
+      # If container has set usage memory limit then this value should be 256MB less than available
+      # container's memory limit.
+      - JAVA_OPTS=-Xmx8g
+
+      # Experimental JDK feature for automatic memory allocation defined by Linux cgroup
+      # NOTE: Deprecated option '-XX:+UseCGroupMemoryLimitForHeap' in OpenJDK 10 and removed in the OpenJDK 11!
+      # Please use only in DEV environment for performance testing purposes with MAX JDK 9
+      # - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm
+
+      # HTTPS with Java max heap 3GB
+      # - JAVA_OPTS=-Xmx3g -Dserver.ssl.enabled=true
+
     restart: unless-stopped
     volumes:
       - ./logs:/opt/microblink-api-ws/logs
